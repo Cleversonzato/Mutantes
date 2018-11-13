@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void sair(View view){
         finish();
+        System.exit(0);
     }
 
 }
