@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mutantes</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_cadastro">Cadastro</string>
+    <string name="title_activity_listar_todos">ListarTodos</string>
+    <string name="title_activity_pesquisar">Pesquisar</string>
+</resources>
