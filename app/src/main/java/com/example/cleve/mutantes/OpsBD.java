@@ -10,14 +10,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class opsBD   {
+public class OpsBD {
 
     private BD bd;
     private SQLiteDatabase database;
 
-    public opsBD(Context contexto){
+    public OpsBD(Context contexto){
         bd = new BD(contexto);
     }
+
     public void open() throws SQLException{
         database = bd.getWritableDatabase();
     }

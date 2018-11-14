@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cleve.mutantes">
 
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,21 +27,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Cadastro"
-            android:label="@string/title_activity_cadastro"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ListarTodos"
             android:label="@string/title_activity_listar_todos"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Pesquisar"
-            android:label="@string/title_activity_pesquisar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Cadastro"
+            android:label="@string/title_activity_cadastro"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Pesquisar"
+            android:label="@string/title_activity_pesquisar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
