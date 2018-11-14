@@ -16,16 +16,19 @@ import java.util.List;
 public class Cadastro extends AppCompatActivity {
 
     private int cont = 1;
+    private EditText parent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+        this.parent =(EditText) findViewById(R.id.poderes);
     }
 
     public void adicionarCampo(View view){
         cont++;
+
         ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.CLayout);
         EditText et = new EditText(this);
         et.setId(cont);
@@ -38,14 +41,14 @@ public class Cadastro extends AppCompatActivity {
         et.setLayoutParams(param);
         layout.addView(et);
 
-        EditText parent =(EditText) findViewById(R.id.poderes);
-
         ConstraintSet cs = new ConstraintSet();
         cs.clone(layout);
         cs.connect((cont), ConstraintSet.TOP, parent.getId(), ConstraintSet.BOTTOM, 8);
         cs.connect((cont), ConstraintSet.LEFT, parent.getId(), ConstraintSet.LEFT, 0);
         cs.connect((cont), ConstraintSet.RIGHT, parent.getId(), ConstraintSet.RIGHT, 0);
         cs.applyTo(layout);
+
+        this.parent = et;
 
     }
 
