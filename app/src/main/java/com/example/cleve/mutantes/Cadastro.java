@@ -17,6 +17,7 @@ public class Cadastro extends AppCompatActivity {
 
     private int cont = 1;
     private EditText parent;
+    private ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.CLayout);
 
 
     @Override
@@ -29,7 +30,7 @@ public class Cadastro extends AppCompatActivity {
     public void adicionarCampo(View view){
         cont++;
 
-        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.CLayout);
+
         EditText et = new EditText(this);
         et.setId(cont);
         et.setHint("Poder");
@@ -39,14 +40,14 @@ public class Cadastro extends AppCompatActivity {
                 ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
                 ConstraintLayout.LayoutParams.WRAP_CONTENT);
         et.setLayoutParams(param);
-        layout.addView(et);
+        this.layout.addView(et);
 
         ConstraintSet cs = new ConstraintSet();
-        cs.clone(layout);
+        cs.clone(this.layout);
         cs.connect((cont), ConstraintSet.TOP, parent.getId(), ConstraintSet.BOTTOM, 8);
         cs.connect((cont), ConstraintSet.LEFT, parent.getId(), ConstraintSet.LEFT, 0);
         cs.connect((cont), ConstraintSet.RIGHT, parent.getId(), ConstraintSet.RIGHT, 0);
-        cs.applyTo(layout);
+        cs.applyTo(this.layout);
 
         this.parent = et;
 
@@ -56,7 +57,7 @@ public class Cadastro extends AppCompatActivity {
         if (cont == 1){
             Toast.makeText(this, "Deve ter ao menos um poder para ser um mutante!", Toast.LENGTH_LONG).show();
         } else{
-
+            this.layout.removeView((EditText) findViewById(cont));
             cont--;
         }
 
