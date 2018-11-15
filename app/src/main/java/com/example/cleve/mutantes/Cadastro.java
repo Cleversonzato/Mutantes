@@ -71,15 +71,16 @@ public class Cadastro extends AppCompatActivity {
 
     public void salvar(View view){
         Mutante mutante = new Mutante();
-        TextView nome = (TextView) findViewById(R.id.nome);
+        TextView nome = (EditText) findViewById(R.id.nome);
         mutante.setNome(nome.getText().toString());
 
-        int idPoder;
         List<String> poderes = new ArrayList();
-        for(int i = 1; i <= cont; i++){
-            idPoder = getResources().getIdentifier("poder"+ cont, "id", getPackageName());
-            nome = (TextView) findViewById(idPoder);
-            poderes.add(nome.getText().toString());
+        TextView poder = (TextView) findViewById(R.id.poderes);
+        poderes.add(poder.getText().toString());
+
+        for(int i = 2; i <= cont; i++){
+            poder = (TextView) findViewById(i);
+            poderes.add(poder.getText().toString());
         }
         mutante.setPoderes(poderes);
 
