@@ -69,7 +69,7 @@ public class Cadastro extends AppCompatActivity {
 
     }
 
-    public void salvar(View view){
+    public void adicionar(View view){
         Mutante mutante = new Mutante();
         TextView nome = (EditText) findViewById(R.id.nome);
         mutante.setNome(nome.getText().toString());
@@ -87,9 +87,9 @@ public class Cadastro extends AppCompatActivity {
        OpsBD bd = new OpsBD(this);
        try {
            bd.open();
-           bd.addMutante(mutante);
+           bd.addMutante(mutante, this);
        }catch (SQLException e){
-           System.out.print(e);
+           e.printStackTrace();
        }finally {
            bd.close();
        }
