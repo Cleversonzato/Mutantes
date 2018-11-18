@@ -63,25 +63,36 @@ public class Editar extends AppCompatActivity {
 
         TextView nome = (EditText) findViewById(R.id.nome);
         this.mutante.setNome(nome.getText().toString());
+        Boolean vazio = false;
+        if(mutante.getNome().isEmpty()){
+            vazio = true;
+        }
 
         List<String> poderes = new ArrayList();
         EditText poder;
 
         for(int i = 1; i <= cont; i++){
             poder = (EditText) findViewById(i);
+            if(poder.getText().toString().isEmpty()){
+                vazio = true;
+            }
             poderes.add(poder.getText().toString());
         }
         this.mutante.setPoderes(poderes);
+        if(vazio){
+            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_LONG).show();
+        }else {
 
-        OpsBD bd = new OpsBD(this);
-        try {
-            bd.open();
-            bd.atualizaMutante(this.mutante, this);
-            setResult(1);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            bd.close();
+            OpsBD bd = new OpsBD(this);
+            try {
+                bd.open();
+                bd.atualizaMutante(this.mutante, this);
+                setResult(1);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                bd.close();
+            }
         }
     }
 

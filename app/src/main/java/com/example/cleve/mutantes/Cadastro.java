@@ -71,8 +71,12 @@ public class Cadastro extends AppCompatActivity {
 
     public void adicionar(View view){
         Mutante mutante = new Mutante();
+        Boolean vazio = false;
         TextView nome = (EditText) findViewById(R.id.nome);
         mutante.setNome(nome.getText().toString());
+        if(mutante.getNome().isEmpty()){
+            vazio = true;
+        }
 
         List<String> poderes = new ArrayList();
         TextView poder = (TextView) findViewById(R.id.poderes);
@@ -80,20 +84,26 @@ public class Cadastro extends AppCompatActivity {
 
         for(int i = 2; i <= cont; i++){
             poder = (TextView) findViewById(i);
+            if(poder.getText().toString().isEmpty()){
+                vazio = true;
+            }
             poderes.add(poder.getText().toString());
         }
         mutante.setPoderes(poderes);
 
-       OpsBD bd = new OpsBD(this);
-       try {
-           bd.open();
-           bd.addMutante(mutante, this);
-       }catch (SQLException e){
-           e.printStackTrace();
-       }finally {
-           bd.close();
-       }
-
+        if(vazio){
+            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_LONG).show();
+        }else {
+            OpsBD bd = new OpsBD(this);
+            try {
+                bd.open();
+                bd.addMutante(mutante, this);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                bd.close();
+            }
+        }
     }
 
 }
