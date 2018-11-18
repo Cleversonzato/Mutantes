@@ -29,7 +29,7 @@ public class OpsBD {
 
     public Mutante addMutante(Mutante mutante, Context contexto) {
         ContentValues values = new ContentValues();
-        values.put("nome", mutante.getNome());
+        values.put(BD.MUTANTE_NOME, mutante.getNome());
 
         long mutId = database.insert(BD.MUTANTES, null, values);
         if( mutId != -1) {
@@ -42,7 +42,7 @@ public class OpsBD {
             }
         }
         if( mutId != -1){
-            Toast.makeText(contexto, "mutante " + mutante.getNome() + " adicionado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(contexto, "mutante " + mutante.getNome() + " salvo", Toast.LENGTH_SHORT).show();
         } else{
             Toast.makeText(contexto, "Falha ao adicionar o mutante", Toast.LENGTH_SHORT).show();
         }
@@ -58,29 +58,31 @@ public class OpsBD {
 
     public List<Mutante> listaMutantes(){
         List<Mutante> mutantes = new ArrayList();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        qb.setTables(BD.MUTANTES +" LEFT INNER JOIN "+ BD.PODERES +
-                " ON " + BD.MUTANTES+"."+BD.MUTANTE_ID+" = " + BD.PODERES+"."+BD.MUTANTE_ID  );
-
-        Cursor cursor = qb.query(database, null, null, null, null, null, null);
-
+        Cursor cursor = database.query(BD.MUTANTES,new String[]{BD.MUTANTE_ID, BD.MUTANTE_NOME}, null, null, null, null, null);
+        cursor.moveToFirst();
         Mutante mutante;
-        List<String> poderes;
 
         while(!cursor.isAfterLast()){
             mutante = new Mutante();
             mutante.setId(cursor.getLong(0));
             mutante.setNome(cursor.getString(1));
-            poderes = new ArrayList<>();
-            while(!cursor.isAfterLast() && mutante.getId() == cursor.getLong(0)){
-                poderes.add(cursor.getString(3));
-                cursor.moveToNext();
-            }
-            mutante.setPoderes(poderes);
             mutantes.add(mutante);
+            cursor.moveToNext();
         }
 
         return mutantes;
+    }
+
+    public List<String> poderesMutante(long id){
+        List<String> poderes = new ArrayList();
+        Cursor cursor = database.query(BD.PODERES, new String[]{BD.PODER_NOME}, BD.MUTANTE_ID+" = "+id, null, null, null, null);
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()){
+           poderes.add(cursor.getString(0));
+           cursor.moveToNext();
+        }
+        return poderes;
     }
 
     public String atualizaMutante(Mutante mutante, Context contexto){
@@ -89,6 +91,40 @@ public class OpsBD {
         this.addMutante(mutante, contexto);
 
         return("Mutante "+ mutante.getNome()+" atualizado");
+    }
+
+    public String buscaMutanteNome(String nome, Context contexto){
+
+        Cursor cursor = database.query(BD.MUTANTES, new String[]{BD.MUTANTE_NOME}, BD.MUTANTE_NOME+" = '"+nome+"'", null, null, null, null);
+        cursor.moveToFirst();
+
+        if(cursor.getCount() == 0 ) {
+            Toast.makeText(contexto, "mutante não localizado", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        else{
+            return(cursor.getString(0));
+        }
+
+    }
+
+    public List<String> buscaMutantePorPoder(String poder, Context contexto){
+
+        List<String> lista = new ArrayList();
+        Cursor cursor = database.query(BD.PODERES, new String[]{BD.MUTANTE_ID}, BD.PODER_NOME+" = '"+poder+"'", null, null, null, null);
+        cursor.moveToFirst();
+        if(cursor.getCount() == 0 ) {
+            Toast.makeText(contexto, "poder não existente", Toast.LENGTH_SHORT).show();
+            return null;
+        } else{
+            while(!cursor.isAfterLast()) {
+                Cursor cursor2 = database.query(BD.MUTANTES, new String[]{BD.MUTANTE_NOME}, BD.MUTANTE_ID + " = " + cursor.getLong(0), null, null, null, null);
+                cursor2.moveToFirst();
+                lista.add(cursor2.getString(0));
+                cursor.moveToNext();
+            }
+        }
+        return lista;
     }
 
 }

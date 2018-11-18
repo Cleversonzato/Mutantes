@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, Cadastro.class));
     }
     public void listar(View view){
-        startActivity(new Intent(this, ListarTodos.class));
+        startActivity(new Intent(this, Listar.class));
     }
     public void pesquisar(View view){
         startActivity(new Intent(this, Pesquisar.class));

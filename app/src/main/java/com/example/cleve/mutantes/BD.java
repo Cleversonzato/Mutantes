@@ -12,15 +12,15 @@ public class BD extends SQLiteOpenHelper {
     public final static String PODER_NOME = "poder";
 
     public final static String DATABASE_NAME = "mutantes.db";
-    public final static int DATABASE_VERSION = 3;
+    public final static int DATABASE_VERSION = 1;
 
     public final static String CREATE_MUTANTES = "CREATE TABLE "+MUTANTES+"( "
             + MUTANTE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + MUTANTE_NOME+ "TEXT NOT NULL);";
+            + MUTANTE_NOME+ " TEXT NOT NULL UNIQUE);";
 
     public final static String CREATE_PODERES  = "CREATE TABLE "+ PODERES+"( " +
             MUTANTE_ID+" INTEGER," +
-            PODER_NOME + "TEXT NOT NULL," +
+            PODER_NOME + " TEXT NOT NULL," +
             "FOREIGN KEY ("+MUTANTE_ID+") REFERENCES " +MUTANTES+"("+MUTANTE_ID+") ON DELETE CASCADE);";
 
     public BD(Context context){
@@ -37,7 +37,7 @@ public class BD extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + MUTANTES);
         db.execSQL("DROP TABLE IF EXISTS " + PODERES);
-        onCreate(db);
+        this.onCreate(db);
     }
 }
 

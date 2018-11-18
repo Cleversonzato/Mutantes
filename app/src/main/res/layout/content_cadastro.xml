@@ -107,5 +107,6 @@
         app:layout_constraintEnd_toEndOf="@+id/text2"
         app:layout_constraintStart_toStartOf="@+id/text2"
         app:layout_constraintTop_toBottomOf="@+id/text2" />
+
 </android.support.constraint.ConstraintLayout>
     </ScrollView>
